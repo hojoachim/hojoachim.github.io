@@ -1,0 +1,129 @@
+/* CSS file for the About page */
+
+/* handle span element in h1 for text transition */
+.name-stack {
+    position: relative;
+    display: block;
+    width: auto;
+    min-height: 1.3em;
+}
+
+/* both texts positioned absolutely on top of each other for fading effect */
+.frog-text, .oliver-text {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: opacity 2s;
+    opacity: 1;
+    display: inline;
+    width: auto;
+}
+
+/* hide oliver-text and show frog-text by default */
+.oliver-text {
+    opacity: 0;
+    pointer-events: none; /* prevent accidental selection while hidden */
+}
+
+.frog-text.hide {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.oliver-text.show {
+    opacity: 1;
+    pointer-events: auto; /* reset pointer events when shown */
+}
+
+/* container for images */
+.img-container {
+    position: relative;
+    width: 50%; /* if changed, also change width/height in media queries */
+    aspect-ratio: 1 / 1; /* square aspect ratio to fit the images */
+    margin: 1em auto 2em auto;
+    /* border-radius: 50%; */
+    /* background-color: greenyellow; */
+}
+
+/* both images positioned absolutely on top of each other for fading effect */
+.img-container img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    transition: opacity 2s;
+}
+
+/* show main-img1 by default */
+.img-container .main-img1 {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* hide main-img2 by default */
+.img-container .main-img2 {
+    opacity: 0;
+    z-index: 2;
+}
+
+/* caption styling for the frog image */
+.frog-caption {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.7);
+    transform: translateX(-50%); /* center text horizontally irrespective of length */
+    white-space: nowrap;
+    font-size: 1.65vw; /* scale fontsize with image size */
+    pointer-events: none;
+    transition: opacity 2s;
+    opacity: 1;
+    z-index: 3;
+}
+
+/* on hover, fade in main-img2 and fade out main-img1 and image caption */
+.img-container:hover .main-img1 ~ .frog-caption {
+    opacity: 0;
+}
+
+.img-container:hover .main-img2 {
+    opacity: 1;
+}
+
+
+@media only screen and (min-width: 768px) {
+    .img-container {
+        /* keep fix image size */
+        /* (768px - 2x38px - 2x16px) * 50% = 330px */
+        width: 330px;
+    }
+    .frog-caption {
+        font-size: 0.8em;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    .main-container {
+        display: flex;
+    }
+    
+    .img-container {
+        margin: 2em 0 0 4em;
+        height: 330px;
+    }
+}
+
+/* for tablets in portrait mode and smaller devices */
+@media only screen and (max-height: 700px) and (max-width: 1024px) {
+    /* .img-container { */
+        /* margin: 1em auto; */
+    /* } */
+
+    /* .img-container img { */
+        /* border-radius: 30em; */
+    /* } */
+}

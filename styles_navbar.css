@@ -1,0 +1,273 @@
+/* CSS file for the Navbar incl greeting and other common styling */
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+
+:root {
+    --primary-color: #444;
+  }
+
+html {
+    overflow: hidden;
+}
+    
+/* *, *::before, *::after { */
+/* box-sizing: border-box; */
+/* } */
+    
+body {
+    font-family: 'Poppins', sans-serif;
+    font-size: 100%;
+    background-color: #F2F2F2;
+    margin: 0;
+    /*to avoid the sticky navbar from disappearing when scrolling all the way up (exceeding body height) */
+    overflow: scroll; 
+}
+
+.navbar {
+    background: white;
+    /* override bootstrap flex display */
+    display: block;
+    position: sticky;
+    top: 0;
+    /* avoid sub-pixel sizes with Bootstrap */
+    min-height: 53px;
+    z-index: 999;
+    padding: 0.75em 2em;
+}
+
+.navbar .nav-container {
+    /* for older browsers */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    /* for modern browsers */
+    display: flex;
+    place-content: space-between;
+    /* override bootstrap margin, padding and max width limit */
+    /* margin: 0; */
+    /* padding: 0 0 0.5em 0; */
+    /* max-width: 100%; */
+}
+
+/* logo formatting */
+.navbar .logo {
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: default;
+    /* remove default margin */
+    margin: 0;
+}
+
+.navbar .logo span {
+    color: #007AF3;
+    transition: opacity 1s;
+}
+
+/* formatting for the typewriter greeting implemented in script_navbar.js */
+.greeting {
+    position: absolute;
+    top: 53px;
+    left: 32px;
+    font-family: 'Dancing Script', cursive;
+    color: #007AF3;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* fade-out effect for the greeting implemented in script_navbar.js */
+.fade-out {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.navbar .mobile-menu {
+    cursor: pointer;
+}
+
+.navbar nav {
+    display: none;
+    position: fixed;
+    width: auto;
+    height: auto;
+    top: 0;
+    right: 0;
+    background: rgba(200, 200, 200, 0.85);
+    padding: 1em 1.7em;
+}
+
+.navbar nav.menu-btn { /* class added and removed in JS */
+    display: block;
+}
+
+.navbar a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.navbar nav ul.primary-nav {
+    margin-top: 2.5em;
+}
+
+.navbar nav ul.secondary-nav {
+    margin-top: 1em;
+}
+
+.navbar nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    text-align: right;
+}
+
+.navbar nav li a {
+    /* to prevent the arrow image from moving to a new line */
+    display: inline-block;
+    /* to avoid shift of left container edge when changing to bold */
+    min-width: 7em;
+    padding: 0.3em;
+    /* horizontally align with menue-exit button */
+    margin-right: 0.15em;
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.navbar nav li.current a,
+.navbar nav li a:hover {
+    font-weight: bold;
+}
+
+.arrow {
+    /* align arrow size and position with text */
+    vertical-align: text-top;
+    width: 1.45em;
+    transition: transform 0.3s;
+}
+
+/* make the arrow move up right at hover over the link */
+/* nav ul.secondary-nav a:hover .arrow { */
+a:hover .arrow {
+    transform: translate(20%, -20%);
+}
+
+.navbar .mobile-menu-exit {
+    float: right;
+    /* adjust to align with menu button */
+    margin: 0.17em 0.45em;
+    cursor: pointer;
+}
+/* end of navbar styling */
+
+
+/* general styling common to all pages */
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 90%;
+    height: calc(100vh - 52.8px); /* adjust for navbar height */
+    margin: 0 auto;
+    padding: 2.5em 1em;
+    color: var(--primary-color);
+}
+
+.text-container h1 {
+    font-size: 2.0em;
+    line-height: 1.3em;
+}
+
+.text-container p {
+    font-size: 1em;
+    line-height: 1.5em;
+    margin: 2em 0 0 0;
+}
+
+.text-container a {
+    color: var(--primary-color);
+}
+
+.footer {
+    font-size: 0.75em;
+}
+
+
+@media only screen and (min-width: 768px) {
+
+    .navbar .mobile-menu,
+    .navbar .mobile-menu-exit {
+        display: none;
+    }
+
+    .navbar .nav-container {
+        display: -ms-grid;
+        display: grid;
+        /* -ms-grid-columns: 150px auto; */
+        grid-template-columns: 150px auto;
+        place-content: unset;
+    }
+
+    .navbar nav {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        background: none;
+        position: unset;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        height: auto;
+        width: 100%;
+        padding: 0;
+    }
+
+    .navbar nav ul {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+    }
+
+    .navbar nav ul.primary-nav {
+        margin: 0 0 0 2.3em;
+    }
+
+    .navbar nav ul.secondary-nav {
+        margin: 0;
+    }
+
+    .navbar nav li a {
+        padding: .2em 0;
+        font-size: 1em;
+        /* to avoid horizontal shifts when changing to bold */
+        min-width: 5em;
+        text-align: center;
+    }
+
+}
+
+@media only screen and (min-width: 1024px) {
+    .navbar {
+        width: 1024px;
+        margin: 0 auto;
+    }
+
+    .main {
+        /* 1024px - 2x51px - 2x32px = 922px */
+        width: 922px;
+        margin: 0 auto;
+    }
+}
+
+/* for tablets in portrait mode and smaller devices */
+@media only screen and (max-height: 700px) and (max-width: 1024px) {
+    .greeting {
+        font-size: 1.2em;
+    }
+
+    .text-container h1 {
+        font-size: 1.5em;
+    }
+
+    .text-container p {
+        font-size: 0.85em;
+        margin: 2em 0 0 0;
+    }
+}

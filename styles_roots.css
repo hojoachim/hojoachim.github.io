@@ -1,0 +1,91 @@
+/* CSS file for the Roots page */
+
+.carousel {
+    margin: 2em auto; /* override bootstrap default margin */
+}
+
+.carousel-control-prev {
+    width: 5%;
+    left: 5%;
+    background-image: linear-gradient(to right, #a0a0a0, #f2f2f2);
+}
+
+.carousel-control-next {
+    width: 5%;
+    right: 5%;
+    background-image: linear-gradient(to left, #a0a0a0, #f2f2f2);
+}
+
+.carousel-control-prev .carousel-control-prev-icon,
+.carousel-control-next .carousel-control-next-icon {
+    background-color: #909090;
+}
+
+.carousel-indicators {
+    position: relative;
+    margin-top: 3%;
+}
+
+.carousel .carousel-indicators button {
+    width: 1vw;
+    height: 1vw;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    background: transparent;
+}
+
+.carousel .carousel-indicators .active {
+    background-color: var(--primary-color);
+}
+
+.carousel-caption {
+    display: inline-block;
+    bottom: 2%;
+    left: 50%;
+    transform: translateX(-50%); /* center text horizontally irrespective of length */
+    white-space: nowrap;
+    width: fit-content;
+    color: var(--primary-color);
+    background: rgba(255,255,255,0.8);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.carousel-caption h3 {
+    font-size: 2vw;
+    margin: 0;
+}
+
+.carousel-caption p {
+    font-size: 1.6vw;
+    margin: 0;
+}
+
+
+@media only screen and (min-width: 768px) {
+    /* keep fix sizes for carousel, captions and buttons */
+    /* (768px - 2x38px - 2x16px) = 660px */
+    .carousel {
+        width: 660px;
+    }
+
+    .carousel-caption h3 {
+        font-size: 15.4px
+    }
+
+    .carousel-caption p {
+        font-size: 12.3px;
+    }
+
+    .carousel .carousel-indicators button {
+        width: 7.7px;     
+        height: 7.7px;
+    }
+}
+
+/* for tablets in portrait mode and smaller devices */
+/* @media only screen and (max-height: 768px) and (max-width: 1024px) { */
+    /* .carousel { */
+        /* margin: 1.5em 1em; reduce image size */
+    /* } */
+/* } */

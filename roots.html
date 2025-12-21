@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Hans-Oliver Joachim - my webpage</title>
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Navbar CSS -->
+        <link href="css/styles_navbar.css" rel="stylesheet">
+        <!-- Roots CSS -->
+        <link href="css/styles_roots.css" rel="stylesheet">
+        
+    </head>
+
+    <body>
+        <!-- Navbar -->
+        <!-- Inspired by Gary Simon's "The 2021 Frontend Developer Crash Course" -->
+        <div class="navbar">
+            <div class="nav-container">
+                <p class="logo">This is <span>me</span></p>
+                <p id="meGreeting" class="greeting"></p>
+                <img id="mobile-cta" class="mobile-menu" src="images/menu.svg" alt="Open navigation">
+                <nav>
+                    <img id="mobile-exit" class="mobile-menu-exit" src="images/exit.svg" alt="Close navigation">
+                    <ul class="primary-nav">
+                        <li><a href="./about.html">About</a></li>
+                        <li class="current"><a href="./roots.html">Roots</a></li>
+                        <li><a href="./career.html">Career</a></li>
+                        <li><a href="./things.html">Things</a></li>
+                    </ul>
+                    <ul class="secondary-nav">
+                        <li><a href="mailto:hojoachim@icloud.com?subject=Your%20homepage&body=Hi%20there,%0D%0DI%20really%20like%20your%20homepage!">Say hello<img class="arrow" src="images/arrow-up-right.svg" alt="Arrow icon">
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <section class="main">
+            <div class="main-container">
+                <div class="text-container">
+                    <h1>
+                        My Roots
+                    </h1>
+                    <p>
+                        I was born in the German city of <a href="https://en.wikipedia.org/wiki/Dresden">Dresden</a>, 
+                        a week after <a href="https://en.wikipedia.org/wiki/East_Germany">East Germany</a> closed its borders 
+                        to the West and started to build the <a href="https://en.wikipedia.org/wiki/Berlin_Wall">Berlin Wall</a>
+                        in the middle of the <a href="https://en.wikipedia.org/wiki/Cold_War">Cold War</a>.<br>
+                        The place I grew up in and went to school is <a href="https://en.wikipedia.org/wiki/G%C3%B6rlitz">Görlitz</a>, 
+                        the easternmost city in Germany. It is located on the border with Poland and boasts one of the most 
+                        picturesque historic old town districts in Germany.
+                    </p>
+                </div>
+
+                <!-- Carousel -->
+                <!-- Based on w3schools Bootstrap 5 Carousel example -->
+                <!-- Own add-ons: Changed left & right buttons to bars at the image edges with backround color change when hovered, changed the indicator buttons to circles positioned below the image, added overlaying captions in the lower part of the images -->
+                <div id="roots-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3500">
+                
+                    <!-- The slideshow/carousel -->
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="images/Goerlitz%20Schulstrasse%207.jpg" alt="The house Schulstrasse 7" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>Schulstrasse 7</h3>
+                                <p>I grew up in this house with my grandma</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Goerlitz%20Elementary%20School.jpg" alt="My Elementary School" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>Elementary School</h3>
+                                <p>Here I started school in grades 1 and 2</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Goerlitz%20Annenschule.jpg" alt="My Middle School" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>Annenschule</h3>
+                                <p>My school for 8 years in grades 3 to 10</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Goerlitz%20EOS.jpg" alt="My High School" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>High School</h3>
+                                <p>For the final grades 11 and 12 to Abitur</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Goerlitz%20Untermarkt.jpg" alt="The square Untermarkt" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>Old town part of Görlitz</h3>
+                                <p>The square Untermarkt with beautiful historical buildings</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Goerlitz%20Peterskirche.jpg" alt="The church Peterskirche" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>Old town part of Görlitz</h3>
+                                <p>The church Peterskirche seen from the bridge to the Poland</p>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <img src="images/Goerlitz%20Postplatz.jpg" alt="The square Postplatz" class="d-block mx-auto" style="width:80%">
+                            <div class="carousel-caption">
+                                <h3>Center of Görlitz</h3>
+                                <p>The square Postplatz with the Muschelminna fountain</p>
+                            </div>
+                        </div>
+
+                        <!-- Left and right controls/icons -->
+                        <button class="carousel-control-prev" type="button" data-bs-target="#roots-carousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#roots-carousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </button>
+                    </div>
+                                   
+                    <!-- Indicators/dots -->
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="0" class="active"></button>
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="1"></button>
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="2"></button>
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="3"></button>
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="4"></button>
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="5"></button>
+                        <button type="button" data-bs-target="#roots-carousel" data-bs-slide-to="6"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                <p>
+                    &copy; 2025 Hans-Oliver Joachim
+                </p>
+            </div>
+        </section>
+
+        <!-- Bootstrap JS -->
+        <!-- Needed for carousel functionality -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Local JS -->
+        <script src="js/script_navbar.js"></script>
+
+    </body>
+
+</html>
