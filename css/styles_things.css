@@ -3,10 +3,11 @@
 /* spinning wheel formatting done with the help of online tutorials at patreon.com/onlinetutorials and support from CS50's duck debugger*/
 .wheel-container {
     position: relative;
-    width: 60%; /* if changed, also change width/font in media queries */
-    aspect-ratio: 1 / 1; /* square aspect ratio to fit the images */
     margin: 2em auto;
-    font-size: 4vw;
+    /* to avoid for the wheel to get larger than the screen height of horizontally held phones */
+    width: min(60%, calc(70vh + 0em)); /* if changed, also change width/font in media queries */
+    aspect-ratio: 1 / 1; /* square aspect ratio */
+    font-size: min(4vw, 6vh);
 }
 
 .wheel {
@@ -17,6 +18,7 @@
     height: 100%;
     border-radius: 50%;
     overflow: hidden;
+    -webkit-overflow-scrolling: touch; /* for Safari 17.6 overflow issue ? */
     box-shadow: 0 0 0 5px #F2F2F2, 0 0 0 8px var(--primary-color);
     /* for smooth spinning effect */
     /* transition: transform 5s cubic-bezier(.17,.67,.83,.67); */
@@ -137,10 +139,11 @@
 }
 
 @media only screen and (min-width: 768px) {
-    /* keep fix sizes for wheel and fonts */
+    /* keep fix sizes of wheel and fonts for horizontal screen width >768px, but scale them with the vertical screen height of horizontally held phones for the wheel to fit the screen */
+
     .wheel-container {
-        width: 395px;
-        font-size: 30.7px;
+        width: min(395px, 70vh);
+        font-size: min(30.7px, 6vh);
     }
 }
 
