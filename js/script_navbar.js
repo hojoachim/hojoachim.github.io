@@ -40,8 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Track when the mouse enters the logo span
-    logoSpan.addEventListener('mouseenter', () => {
+
+    // Track when the mouse enters or user taps the logo span
+    logoSpan.addEventListener('mouseenter', startGreeting);
+    logoSpan.addEventListener('touchstart', startGreeting);
+    
+    // Track when the mouse leaves or user lifts finger from the logo span
+    logoSpan.addEventListener('mouseleave', endGreeting);
+    logoSpan.addEventListener('touchend', endGreeting);
+    
+    function startGreeting(e) {
         if (!running && !hover) { // Prevent triggers during greeting and if mouse hovers when greeting is finished
             logoSpan.style.opacity = "0"; // Hide the span
             greet.innerHTML = ""; // Clear previous content
@@ -52,12 +60,11 @@ document.addEventListener("DOMContentLoaded", () => {
         else {
             hover = true; // Set hover flag every time the mouse enters
         }
-    });
+    };
 
-    // Track when the mouse leaves the logo span
-    logoSpan.addEventListener('mouseleave', () => {
-        hover = false; // Reset hover flag every time the mouse leaves
-    });
+    function endGreeting(e) {
+        hover = false; // Reset hover flag
+    };
 
 
     // Mobile menu functionality
@@ -75,6 +82,14 @@ document.addEventListener("DOMContentLoaded", () => {
         // Click on "X" symbol
         mobileBtnExit.addEventListener('click', () => {
             nav.classList.remove('menu-btn');  // Remove class to close mobile menu
+        });
+
+        // Close mobile menue at window resize >768px
+        window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            nav.classList.remove('menu-btn');
+            // nav.style.display = ''; // Reset display property
+            }
         });
     } else {
         console.error("One or more elements (nav, mobileBtn, mobileBtnExit) are missing in the DOM.");
