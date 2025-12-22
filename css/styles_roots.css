@@ -1,7 +1,11 @@
 /* CSS file for the Roots page */
 
 .carousel {
-    margin: 2em auto; /* override bootstrap default margin */
+    /* override bootstrap default margin */
+    margin: 2em auto;
+    /* to avoid for the images to get larger than the screen height of horizontally held phones */
+    max-width: calc(100vh + 4em);
+    object-fit: contain;
 }
 
 .carousel-control-prev {
@@ -27,8 +31,8 @@
 }
 
 .carousel .carousel-indicators button {
-    width: 1vw;
-    height: 1vw;
+    width: min(1vw, 1vh);
+    height: min(1vw, 1vh);
     border: 2px solid var(--primary-color);
     border-radius: 50%;
     background: transparent;
@@ -52,40 +56,34 @@
 }
 
 .carousel-caption h3 {
-    font-size: 2vw;
+    font-size: min(2vw, 3vh);
     margin: 0;
 }
 
 .carousel-caption p {
-    font-size: 1.6vw;
+    font-size: min(1.6vw, 2.4vh);
     margin: 0;
 }
 
 
 @media only screen and (min-width: 768px) {
-    /* keep fix sizes for carousel, captions and buttons */
+    /* keep fix sizes of carousel, captions and buttons for horizontal screen width >768px, but scale them with the vertical screen height of horizontally held phones for the carousel to fit the screen */
+
     /* (768px - 2x38px - 2x16px) = 660px */
     .carousel {
         width: 660px;
     }
 
     .carousel-caption h3 {
-        font-size: 15.4px
+        font-size: min(15.4px, 3vh);
     }
 
     .carousel-caption p {
-        font-size: 12.3px;
+        font-size: min(12.3px, 2.4vh);
     }
 
     .carousel .carousel-indicators button {
-        width: 7.7px;     
-        height: 7.7px;
+        width: min(7.7px, 1vh);
+        height: min(7.7px, 1vh);
     }
 }
-
-/* for tablets in portrait mode and smaller devices */
-/* @media only screen and (max-height: 768px) and (max-width: 1024px) { */
-    /* .carousel { */
-        /* margin: 1.5em 1em; reduce image size */
-    /* } */
-/* } */
