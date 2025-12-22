@@ -70,7 +70,7 @@ body {
     left: 32px;
     font-family: 'Dancing Script', cursive;
     color: #007AF3;
-    font-size: 1.5em;
+    font-size: 1.0em; /* 1.5em; */
     font-weight: bold;
 }
 
@@ -171,12 +171,12 @@ a:hover .arrow {
 }
 
 .text-container h1 {
-    font-size: 2.0em;
+    font-size: 1.3em; /* 2.0em; */
     line-height: 1.3em;
 }
 
 .text-container p {
-    font-size: 1em;
+    font-size: 0.85em; /* 1.0em; */
     line-height: 1.5em;
     margin: 2em 0 0 0;
 }
@@ -189,14 +189,42 @@ a:hover .arrow {
     font-size: 0.75em;
 }
 
+/* for small iPhone devices, vertical */
+@media only screen and (min-width: 375px) {
+    .greeting {
+        font-size: 1.2em;
+    }
+    
+    .text-container h1 {
+        font-size: 1.5em;
+    }
+    
+    /* .text-container p {
+        font-size: 0.85em;
+    } */
+}
 
+/* for remaining iPhone devices, vertical */
+@media only screen and (min-width: 460px) {
+    .greeting {
+        font-size: 1.5em;
+    }
+
+    .text-container h1 {
+        font-size: 2.0em;
+    }
+
+    .text-container p {
+        font-size: 1.0em;
+    }
+}
 @media only screen and (min-width: 768px) {
-
+    
     .navbar .mobile-menu,
     .navbar .mobile-menu-exit {
         display: none;
     }
-
+    
     .navbar .nav-container {
         display: -ms-grid;
         display: grid;
@@ -226,20 +254,33 @@ a:hover .arrow {
     }
 
     .navbar nav ul.primary-nav {
-        margin: 0 0 0 2.3em;
+        margin: 0.2em 0 0 2.3em;
     }
 
     .navbar nav ul.secondary-nav {
-        margin: 0;
+        margin: 0.2em 0 0 0;
     }
 
     .navbar nav li a {
-        padding: .2em 0;
+        /* padding: .2em 0; */
+        padding: 0;
         font-size: 1em;
         /* to avoid horizontal shifts when changing to bold */
         min-width: 5em;
         text-align: center;
     }
+
+    /* .greeting {
+        font-size: 1.5em;
+    }
+
+    .text-container h1 {
+        font-size: 2.0em;
+    }
+
+    .text-container p {
+        font-size: 1.0em;
+    } */
 
 }
 
@@ -257,17 +298,3 @@ a:hover .arrow {
 }
 
 /* for tablets in portrait mode and smaller devices */
-@media only screen and (max-height: 700px) and (max-width: 1024px) {
-    .greeting {
-        font-size: 1.2em;
-    }
-
-    .text-container h1 {
-        font-size: 1.5em;
-    }
-
-    .text-container p {
-        font-size: 0.85em;
-        margin: 2em 0 0 0;
-    }
-}
