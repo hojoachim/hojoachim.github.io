@@ -7,7 +7,7 @@
 }
 
 .list-container ol {
-    font-size: 1em;
+    font-size: 0.85em;
     line-height: 1.5em;
     margin: 0 0 2em 0;
 }
@@ -52,17 +52,16 @@
 }
 
 
+@media only screen and (min-width: 460px) {
+    .list-container ol {
+        font-size: 1.0em;
+    }
+}
+
 @media only screen and (min-width: 768px) {
     .main-img {
         /* keep fix siz */
         /* (768px - 2x38px - 2x16px) = 660px */
         width: 660px;
-    }
-}
-
-/* for tablets in portrait mode and smaller devices */
-@media only screen and (max-height: 768px) and (max-width: 1024px) {
-    .list-container ol {
-        font-size: 0.85em;
     }
 }
