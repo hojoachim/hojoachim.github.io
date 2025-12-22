@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function showFrog(e) {
-        frogText.classList.remove('hide');
-        oliverText.classList.remove('show');
+        frogText.classList.remove('show');
+        oliverText.classList.remove('hide');
     }
 });
