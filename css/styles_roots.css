@@ -3,7 +3,7 @@
 .carousel {
     /* override bootstrap default margin */
     margin: 2em auto;
-    /* to avoid for the images to get larger than the screen height of horizontally held phones */
+    /* to avoid for the carousel to get larger than the screen height of horizontally held devices */
     max-width: calc(100vh + 4em);
     object-fit: contain;
 }
@@ -67,7 +67,7 @@
 
 
 @media only screen and (min-width: 768px) {
-    /* keep fix sizes of carousel, captions and buttons for horizontal screen width >768px, but scale them with the vertical screen height of horizontally held phones for the carousel to fit the screen */
+    /* keep fix sizes of carousel, captions and buttons for horizontal screen width >768px, but scale them with the vertical screen height of horizontally held devices for the carousel to fit the screen */
 
     /* (768px - 2x38px - 2x16px) = 660px */
     .carousel {
