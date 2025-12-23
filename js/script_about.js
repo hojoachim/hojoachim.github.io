@@ -7,35 +7,70 @@ document.addEventListener("DOMContentLoaded", () => {
     const imgContainer = document.querySelector('.img-container');
     const frogText = document.querySelector('.frog-text');
     const oliverText = document.querySelector('.oliver-text');
+    const frogImg = document.querySelector('.main-img1');
+    const oliverImg = document.querySelector('.main-img2');
+    const frogCap = document.querySelector('.frog-caption');
     let showingOliver = false;
+    let revertTimeout = null;
     
-    imgContainer.addEventListener('mouseenter', showOliver);
-    imgContainer.addEventListener('touchstart', showOliver);
-    
-    imgContainer.addEventListener('mouseleave', showFrog);
-    imgContainer.addEventListener('touchend', showFrog);
-
-    function showOliver(e) {
+    function showOliver() {
         if (!showingOliver) {
             frogText.classList.add('hide');
+            frogText.classList.remove('show');
             oliverText.classList.add('show');
+            oliverText.classList.remove('hide');
+            frogImg.classList.add('hide');
+            frogImg.classList.remove('show');
+            frogCap.classList.add('hide');
+            frogCap.classList.remove('show');
+            oliverImg.classList.add('show');
+            oliverImg.classList.remove('hide');
             showingOliver = true;
         }
     }
 
-    function showFrog(e) {
+    function showFrog() {
         if (showingOliver) {
+            frogText.classList.add('show');
             frogText.classList.remove('hide');
+            oliverText.classList.add('hide');
             oliverText.classList.remove('show');
+            frogImg.classList.add('show');
+            frogImg.classList.remove('hide');
+            frogCap.classList.add('show');
+            frogCap.classList.remove('hide');
+            oliverImg.classList.add('hide');
+            oliverImg.classList.remove('show');
             showingOliver = false;
         }
     }
 
-    // Touch/click anywhere switches back to Frog
-    // document.addEventListener('touchstart', function(e) {
-    //     if (showingOliver && !imgContainer.contains(e.target)) {
-    //         showFrog();
-    //     }
-    // });
+    // Mouse enter: show Oliver, revert after 3s
+    imgContainer.addEventListener('mouseenter', function() {
+        showOliver();
+        if (revertTimeout) clearTimeout(revertTimeout);
+        revertTimeout = setTimeout(showFrog, 3000);
+    });
+
+    // Mouse leave: revert immediately
+    imgContainer.addEventListener('mouseleave', function() {
+        if (revertTimeout) clearTimeout(revertTimeout);
+        showFrog();
+    });
+
+    // Touch start: show Oliver, revert after 3s
+    imgContainer.addEventListener('touchstart', function(e) {
+        showOliver();
+        if (revertTimeout) clearTimeout(revertTimeout);
+        revertTimeout = setTimeout(showFrog, 3000);
+    });
+
+    // Tap again to revert immediately
+    imgContainer.addEventListener('touchend', function(e) {
+        if (showingOliver) {
+            if (revertTimeout) clearTimeout(revertTimeout);
+            showFrog();
+        }
+    });
 });
 
