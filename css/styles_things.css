@@ -99,7 +99,6 @@
 .modal-content {
     background-color: #F2F2F2;
     color: var(--primary-color);
-    /* font-size: 1em !important */
 }
 
 .modal-header {
@@ -108,12 +107,12 @@
 }
 
 .modal-body {
-    font-size: 1em !important;
+    font-size: 0.82em !important;
     line-height: 1.5em !important;   
 }
 
 .modal-img {
-    width: 93%;
+    width: 75%; /* 93%; */
     /* height: auto; */
     margin: 0 auto 1em auto;
 }
@@ -138,27 +137,20 @@
     transform: translateY(2px); /* click effect */
 }
 
-@media only screen and (min-width: 768px) {
-    /* keep fix sizes of wheel and fonts for horizontal screen width >768px, but scale them with the vertical screen height of horizontally held phones for the wheel to fit the screen */
-
-    .wheel-container {
-        width: min(395px, 70vh);
-        font-size: min(30.7px, 6vh);
+/* for mobile phone screen sizes */
+@media only screen and (min-width: 400px) and (min-height: 768px) {
+    .modal-body {
+        font-size: 1.0em !important;
+    }
+    .modal-img {
+        width: 93%;
     }
 }
 
-/* for tablets in portrait mode and smaller devices */
-@media only screen and (max-height: 768px) and (max-width: 1024px) {
-    .modal-header {
-    font-size: 1.1em !important;
-    }
-
-    .modal-body { /* to be adjusted further if needed */
-    font-size: 0.82em !important;
-    line-height: 1.3em !important;   
-    }
-
-    .modal-img { /* to be adjusted further if needed */
-        width: 75%;
+@media only screen and (min-width: 768px) {
+    /* keep fix sizes of wheel and fonts for horizontal screen width >768px, but scale them with the vertical screen height of horizontally held phones for the wheel to fit the screen */
+    .wheel-container {
+        width: min(395px, 70vh);
+        font-size: min(30.7px, 6vh);
     }
 }

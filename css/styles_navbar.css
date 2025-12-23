@@ -43,10 +43,6 @@ body {
     /* for modern browsers */
     display: flex;
     place-content: space-between;
-    /* override bootstrap margin, padding and max width limit */
-    /* margin: 0; */
-    /* padding: 0 0 0.5em 0; */
-    /* max-width: 100%; */
 }
 
 /* logo formatting */
@@ -171,12 +167,12 @@ a:hover .arrow {
 }
 
 .text-container h1 {
-    font-size: 1.3em; /* 2.0em; */
+    font-size: 1.3em;
     line-height: 1.3em;
 }
 
 .text-container p {
-    font-size: 0.85em; /* 1.0em; */
+    font-size: 0.85em;
     line-height: 1.5em;
     margin: 2em 0 0 0;
 }
@@ -198,10 +194,6 @@ a:hover .arrow {
     .text-container h1 {
         font-size: 1.5em;
     }
-    
-    /* .text-container p {
-        font-size: 0.85em;
-    } */
 }
 
 /* for remaining iPhone devices, vertical */
@@ -269,19 +261,6 @@ a:hover .arrow {
         min-width: 5em;
         text-align: center;
     }
-
-    /* .greeting {
-        font-size: 1.5em;
-    }
-
-    .text-container h1 {
-        font-size: 2.0em;
-    }
-
-    .text-container p {
-        font-size: 1.0em;
-    } */
-
 }
 
 @media only screen and (min-width: 1024px) {
@@ -296,5 +275,3 @@ a:hover .arrow {
         margin: 0 auto;
     }
 }
-
-/* for tablets in portrait mode and smaller devices */
