@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Mouse enter: show Oliver, revert after 3s
+    // Mouse hover: show Oliver, revert after 3s
     imgContainer.addEventListener('mouseenter', function() {
         showOliver();
         if (revertTimeout) clearTimeout(revertTimeout);
@@ -58,19 +58,19 @@ document.addEventListener("DOMContentLoaded", () => {
         showFrog();
     });
 
-    // Touch start: show Oliver, revert after 3s
+    // Mobile tap functionality
     imgContainer.addEventListener('touchstart', function(e) {
-        showOliver();
-        if (revertTimeout) clearTimeout(revertTimeout);
-        revertTimeout = setTimeout(showFrog, 3000);
-    });
-
-    // Tap again to revert immediately
-    imgContainer.addEventListener('touchend', function(e) {
-        if (showingOliver) {
+        // Prevent default touch behavior, like scrolling
+        e.preventDefault();
+        if (!showingOliver) {
+            showOliver();
+            if (revertTimeout) clearTimeout(revertTimeout);
+            revertTimeout = setTimeout(showFrog, 3000);
+        } else {
+            // If already showing Oliver, revert immediately
             if (revertTimeout) clearTimeout(revertTimeout);
             showFrog();
         }
-    });
+    // tells the browser that the event listener might call preventDefault(), so it should not perform the default action (like scrolling) until the event listener has finished executing    
+    }, {passive: false});
 });
-
