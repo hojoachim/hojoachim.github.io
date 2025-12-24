@@ -10,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Open Bootstrap modal on segment click
     segments.forEach(segment => {
-        segment.onclick = function() {
+        segment.onclick = function(e) {
+            e.preventDefault(); // Prevent default action of tap on mobile devices
             myModal.show();
             document.getElementById('modalHeader').textContent = segment.getAttribute('data-header');
             document.getElementById('modalBody').textContent = segment.getAttribute('data-body');
@@ -27,7 +28,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // Initial random value for spin between 1000 and 3600 deg adjusted to always stop in the middle of a segment
     let value = -(Math.floor((Math.ceil(Math.random() * 2600) + 1000) / segmentAngle) * segmentAngle - 45);
     // console.log(value);
-    spinBtn.onclick = function() {
+    spinBtn.onclick = function(e) {
+        e.preventDefault(); // Prevent default action of tap on mobile devices
         // console.log(value);
         wheel.style.transform = "rotate(" + value + "deg)";
         // Segment angle after spin ends
