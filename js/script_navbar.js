@@ -70,19 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const nav = document.querySelector('nav');
     const mobileBtn = document.getElementById('mobile-cta');  // "burger" image
     const mobileBtnExit = document.getElementById('mobile-exit');  // X symbol
-    let mobileTap = false; // Flag to track mobile tap state
+    let mobileBtnTap = false; // Flag to track mobile tap state
 
     // Mobile: Tap on "burger" image
     mobileBtn.addEventListener('touchstart', function(e) {
-        mobileTap = true;
+        mobileBtnTap = true;
         e.preventDefault(); // Suppress default action for touch devices
         nav.classList.add('menu-btn');  // Add class to open mobile menu
     }, {passive: false});
 
     // Desktop: Click on "burger" image
     mobileBtn.addEventListener('click', (e) => {
-        if (mobileTap) {
-            mobileTap = false; // Reset mobile tap flag
+        if (mobileBtnTap) {
+            mobileBtnTap = false; // Reset mobile tap flag
             return; // Ignore the click event if it was a mobile tap
         }
         nav.classList.add('menu-btn');  // Add class to open mobile menu
@@ -90,15 +90,15 @@ document.addEventListener("DOMContentLoaded", () => {
         
     // Mobile: Tap on "X" symbol
     mobileBtnExit.addEventListener('touchstart', function(e) {
-        mobileTap = true
+        mobileBtnTap = true
         e.preventDefault(); // Suppress default action for touch devices
         nav.classList.remove('menu-btn');  // Remove class to close mobile menu
     }, {passive: false});
 
     // Desktop: Click on "X" symbol
     mobileBtnExit.addEventListener('click', (e) => {
-        if (mobileTap) {
-            mobileTap = false; // Reset mobile tap flag
+        if (mobileBtnTap) {
+            mobileBtnTap = false; // Reset mobile tap flag
             return; // Ignore the click event if it was a mobile tap
         }
         nav.classList.remove('menu-btn');  // Remove class to close mobile menu
