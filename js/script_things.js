@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let spinBtn = document.querySelector('.spin-btn');
     let segments = document.querySelectorAll('.segment');
     let myModal = new bootstrap.Modal(document.getElementById('myModal'));
+    let spinning = false; // Flag to prevent multiple spins or selections at the same time
     
     // Open Bootstrap modal on segment click
     function showModal(segment) {
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
         let segmentsTap = false
         // Mobile: Tap on segment
         segment.addEventListener('touchstart', function(e) {
+            if (spinning) return; // Block during spinning
             segmentsTap = true;
             e.preventDefault(); // Prevent default action of tap on mobile devices
             showModal(segment);
@@ -27,6 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Desktop: Click on segment
         segment.addEventListener('click', function(e) {
+            if (spinning) return; // Block during spinning
             if (segmentsTap) {
                 segmentsTap = false; // Reset mobile tap flag
                 return; // Ignore the click event if it was a mobile tap
@@ -47,6 +50,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Spin the wheel
     function spinWheel (e) {
+        if (spinning) return; // Prevent multiple spins at the same time
+        spinning = true; // Set spinning flag
         wheel.style.transform = "rotate(" + value + "deg)";
         // Segment angle after spin ends
         let finalValue = value;
@@ -73,11 +78,13 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('modalHeader').textContent = selectedSegment.getAttribute('data-header');
             document.getElementById('modalBody').textContent = selectedSegment.getAttribute('data-body');
             document.getElementById('modalImg').src = selectedSegment.getAttribute('data-image');
+            spinning = false; // Reset spinning flag
         }, 3000); // match transition duration
     }
 
     // Mobile: Tap on spin button
     spinBtn.addEventListener('touchstart', function(e) {
+        if (spinning) return; // Block during spinning
         spinBtnTap = true;
         e.preventDefault(); // Prevent default action of tap on mobile devices
         spinWheel(e);
@@ -86,6 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Desktop: Click on spin button
     spinBtn.addEventListener('click', function(e) {
+        if (spinning) return; // Block during spinning  
         if (spinBtnTap) {
             spinBtnTap = false; // Reset mobile tap flag
             return; // Ignore the click event if it was a mobile tap
