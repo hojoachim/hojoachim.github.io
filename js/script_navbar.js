@@ -6,13 +6,13 @@ document.addEventListener("DOMContentLoaded", () => {
     /*
     Type greeting when hovering over 'me' in logo span
     Based on w3schools Typewriter example
-    Own add-ons: line break, fade-out effect, connection to span hover, and suppression of re-triggering the greeting during typing or if the mouse is hovering over the span when the greeting finishes
+    Own add-ons: fade-out effect, connection to span hover, and suppression of re-triggering the greeting during typing or if the mouse is hovering over the span when the greeting finishes
     */
     const logoSpan = document.querySelector('.navbar .logo span');
     const greet = document.getElementById('meGreeting');
     let i = 0;
     const txt = "Dr. Hans-Oliver Joachim from Tokyo, Japan";
-    const speed = 80;
+    const speed = 40;
     let running = false; // Flag to track greeting state
     let hover = false; // Flag to track hover state
 
@@ -74,15 +74,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Check if elements exist before adding event listeners
     if (mobileBtn && mobileBtnExit && nav) {
-        // Click on "burger" image
-        mobileBtn.addEventListener('click', () => {
+        // Click or tap on "burger" image
+        mobileBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Suppress default action for touch devices
             nav.classList.add('menu-btn');  // Add class to open mobile menu
-        });
-
-        // Click on "X" symbol
+        }, {passive: false});
+        
+        // Click or tap on "X" symbol
         mobileBtnExit.addEventListener('click', () => {
+            e.preventDefault(); // Suppress default action for touch devices
             nav.classList.remove('menu-btn');  // Remove class to close mobile menu
-        });
+        }, {passive: false});
 
         // Close mobile menue at window resize >768px
         window.addEventListener('resize', function() {
