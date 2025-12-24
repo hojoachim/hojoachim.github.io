@@ -253,7 +253,7 @@ a:hover .arrow {
     }
 
     .navbar nav ul.primary-nav {
-        margin: 0.2em 0 0 2.3em;
+        margin: 0.2em 0 0 2.1em;
     }
 
     .navbar nav ul.secondary-nav {
@@ -267,6 +267,11 @@ a:hover .arrow {
         /* to avoid horizontal shifts when changing to bold */
         min-width: 5em;
         text-align: center;
+    }
+
+    .navbar nav ul.secondary-nav li a {
+        min-width: 7em;
+        position: relative;
     }
 }
 
