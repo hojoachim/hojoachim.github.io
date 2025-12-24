@@ -4,9 +4,9 @@
 document.addEventListener("DOMContentLoaded", () => {
 
     /*
-    Type greeting when hovering over 'me' in logo span
+    Type greeting when hovering over or tapping on 'me' in logo span
     Based on w3schools Typewriter example
-    Own add-ons: fade-out effect, connection to span hover, and suppression of re-triggering the greeting during typing or if the mouse is hovering over the span when the greeting finishes
+    Own add-ons: mobile functionality, fade-out effect, connection to span hover, and suppression of re-triggering the greeting during typing or if the mouse is hovering over the span when the greeting finishes
     */
     const logoSpan = document.querySelector('.navbar .logo span');
     const greet = document.getElementById('meGreeting');
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const speed = 40;
     let running = false; // Flag to track greeting state
     let hover = false; // Flag to track hover state
-
+    
     function typeWriter() {
         if (i < txt.length) {
             if (txt.charAt(i) === "\n") {
@@ -39,8 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 3000); // Wait for 3 seconds before starting the fade-out
         }
     }
-
-
+    
     // Track when the mouse enters or user taps the logo span
     logoSpan.addEventListener('mouseenter', startGreeting);
     logoSpan.addEventListener('touchstart', startGreeting);
@@ -61,41 +60,57 @@ document.addEventListener("DOMContentLoaded", () => {
             hover = true; // Set hover flag every time the mouse enters
         }
     };
-
+    
     function endGreeting(e) {
         hover = false; // Reset hover flag
     };
-
-
+    
+    
     // Mobile menu functionality
     const nav = document.querySelector('nav');
     const mobileBtn = document.getElementById('mobile-cta');  // "burger" image
     const mobileBtnExit = document.getElementById('mobile-exit');  // X symbol
+    let mobileTap = false; // Flag to track mobile tap state
 
-    // Check if elements exist before adding event listeners
-    if (mobileBtn && mobileBtnExit && nav) {
-        // Click or tap on "burger" image
-        mobileBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Suppress default action for touch devices
-            nav.classList.add('menu-btn');  // Add class to open mobile menu
-        }, {passive: false});
+    // Mobile: Tap on "burger" image
+    mobileBtn.addEventListener('touchstart', function(e) {
+        mobileTap = true;
+        e.preventDefault(); // Suppress default action for touch devices
+        nav.classList.add('menu-btn');  // Add class to open mobile menu
+    }, {passive: false});
+
+    // Desktop: Click on "burger" image
+    mobileBtn.addEventListener('click', (e) => {
+        if (mobileTap) {
+            mobileTap = false; // Reset mobile tap flag
+            return; // Ignore the click event if it was a mobile tap
+        }
+        nav.classList.add('menu-btn');  // Add class to open mobile menu
+    });
         
-        // Click or tap on "X" symbol
-        mobileBtnExit.addEventListener('click', (e) => {
-            e.preventDefault(); // Suppress default action for touch devices
-            nav.classList.remove('menu-btn');  // Remove class to close mobile menu
-        }, {passive: false});
+    // Mobile: Tap on "X" symbol
+    mobileBtnExit.addEventListener('touchstart', function(e) {
+        mobileTap = true
+        e.preventDefault(); // Suppress default action for touch devices
+        nav.classList.remove('menu-btn');  // Remove class to close mobile menu
+    }, {passive: false});
 
-        // Close mobile menue at window resize >768px
-        window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            nav.classList.remove('menu-btn');
-            // nav.style.display = ''; // Reset display property
-            }
-        });
-    } else {
-        console.error("One or more elements (nav, mobileBtn, mobileBtnExit) are missing in the DOM.");
+    // Desktop: Click on "X" symbol
+    mobileBtnExit.addEventListener('click', (e) => {
+        if (mobileTap) {
+            mobileTap = false; // Reset mobile tap flag
+            return; // Ignore the click event if it was a mobile tap
+        }
+        nav.classList.remove('menu-btn');  // Remove class to close mobile menu
+    });
+
+    // Close mobile menu at window resize >768px
+    window.addEventListener('resize', function(e) {
+    if (window.innerWidth > 768) {
+        nav.classList.remove('menu-btn');
+        // nav.style.display = ''; // Reset display property
     }
+});
 
     /*
     With help from CS50 Duck Debugger
