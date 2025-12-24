@@ -1,10 +1,16 @@
 /* CSS file for the Navbar incl greeting and other common styling */
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap");
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
 :root {
     --primary-color: #444;
+    /* --secondary-color: #007AF3; /* Bright Blue */
+    /* --secondary-color: #0056b3; /* Darker Blue */
+    /* --secondary-color: #28B222; /* Forest Green */
+    /* --secondary-color: #B2AC88; /* Sage Green */
+    --secondary-color: #008080; /* Teal */
   }
 
 html {
@@ -55,7 +61,7 @@ body {
 }
 
 .navbar .logo span {
-    color: #007AF3;
+    color: var(--secondary-color);
     transition: opacity 1s;
 }
 
@@ -64,8 +70,9 @@ body {
     position: absolute;
     top: 53px;
     left: 32px;
-    font-family: 'Dancing Script', cursive;
-    color: #007AF3;
+    /* font-family: 'Dancing Script', cursive; */
+    font-family: 'Caveat';
+    color: var(--secondary-color);
     font-size: 1.0em; /* 1.5em; */
     font-weight: bold;
 }
