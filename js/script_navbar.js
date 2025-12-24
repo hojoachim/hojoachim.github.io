@@ -90,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
     // Mobile: Tap on "X" symbol
     mobileBtnExit.addEventListener('touchstart', function(e) {
-        mobileBtnTap = true
+        mobileBtnTap = true;
         e.preventDefault(); // Suppress default action for touch devices
         nav.classList.remove('menu-btn');  // Remove class to close mobile menu
     }, {passive: false});
