@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }, {passive: false});
         
         // Click or tap on "X" symbol
-        mobileBtnExit.addEventListener('click', () => {
+        mobileBtnExit.addEventListener('click', (e) => {
             e.preventDefault(); // Suppress default action for touch devices
             nav.classList.remove('menu-btn');  // Remove class to close mobile menu
         }, {passive: false});
