@@ -103,6 +103,7 @@
 
 .modal-header {
     font-size: 1.2em !important;
+    font-weight: 600 !important;
     border-bottom: 1.5px solid var(--primary-color);
 }
 
