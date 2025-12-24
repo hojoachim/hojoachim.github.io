@@ -141,7 +141,7 @@ body {
 
 .arrow {
     /* align arrow size and position with text */
-    vertical-align: text-top;
+    vertical-align: -0.35em;
     width: 1.45em;
     transition: transform 0.3s;
 }
