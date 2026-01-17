@@ -1,0 +1,66 @@
+/* CSS file for Wikipedia preview pop-up windows */
+
+.wiki-preview {
+    position: absolute;
+    width: 320px;
+    background: white;
+    border: 1px solid var(--primary-color);
+    border-radius: 2px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    padding: 10px;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.wiki-preview.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.wiki-preview-thumbnail {
+    width: 100%;
+    height: auto; /* 150px; */
+    max-height: 225px;
+    object-fit: contain;
+    border-radius: 2px 2px 0 0;
+    margin-bottom: 1em;
+    display: block;
+}
+
+.wiki-preview-title {
+    font-weight: bold;
+}
+
+.wiki-preview-extract {
+    font-size: 0.95em;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 10; /* limit the number of lines in the block, older browsers & Safari */
+    line-clamp: 10; /* same as above , standard property for modern browsers */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    position: relative;
+}
+
+.wiki-preview-extract::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 8em; /* Width of fade effect */
+    height: 1.6em; /* Height of one line */
+    background: linear-gradient(to right, transparent, white);
+    pointer-events: none;
+}
+
+.wiki-preview-loading {
+    text-align: center;
+}
+
+.wiki-preview-error {
+    text-align: center;
+    color: red;
+}
