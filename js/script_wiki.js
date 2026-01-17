@@ -16,8 +16,20 @@
     const HIDE_DELAY = 300; // ms delay before hiding preview
     const API_ENDPOINT = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
 
+    // Check if device is mobile
+    function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+               || ('ontouchstart' in window) 
+               || (window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
+    }
+
     // Initialize
     function init() {
+        // Don't initialize on mobile devices
+        if (isMobileDevice()) {
+            return;
+        }
+        
         createPreviewElement();
         attachEventListeners();
     }
