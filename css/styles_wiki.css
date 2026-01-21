@@ -2,7 +2,7 @@
 
 .wiki-preview {
     position: absolute;
-    width: 320px;
+    width: 250px;
     background: white;
     border: 1px solid var(--primary-color);
     border-radius: 2px;
@@ -23,7 +23,7 @@
 .wiki-preview-thumbnail {
     width: 100%;
     height: auto; /* 150px; */
-    max-height: 225px;
+    max-height: 160px;
     object-fit: contain;
     border-radius: 2px 2px 0 0;
     margin-bottom: 1em;
@@ -35,7 +35,7 @@
 }
 
 .wiki-preview-extract {
-    font-size: 0.95em;
+    font-size: 0.9em;
     margin: 0;
     display: -webkit-box;
     -webkit-line-clamp: 10; /* limit the number of lines in the block, older browsers & Safari */
