@@ -1,34 +1,38 @@
-// Wikipedia Preview Pop-up Implementation
-(function() {
-    'use strict';
+// JS file for Wiki pop-up preview functionality
 
-    // Cache for API responses
-    const cache = new Map();
-    
-    // Preview element
-    let previewElement = null;
-    let showTimeout = null;
-    let hideTimeout = null;
-    let currentLink = null;
+//IIFE (Immediately Invoked Function Expression): (function() { ... })() creates a private scope to avoid polluting the global namespace
+(function() { 
+    'use strict'; // Enables strict mode for better error checking and prevents common JavaScript pitfalls
 
-    // Global constants
-    const SHOW_DELAY = 400; // ms delay before showing preview
-    const HIDE_DELAY = 300; // ms delay before hiding preview
-    const API_ENDPOINT = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+    // State variables
+    const cache = new Map(); // Map object to store API responses so we don't fetch the same article twice
+    let previewElement = null; // Will hold the DOM element for the pop-up window
+    let mainContainer = null; // Cached reference to .main-container (the page's content area)
+    let showTimeout = null; // Timer ID for the delay before showing preview (prevents flashing on quick hovers)
+    let hideTimeout = null; // Timer ID for the delay before hiding preview (keeps it visible when moving to the pop-up)
+    let currentLink = null; // Tracks which link is currently being hovered (prevents race conditions)
 
-    // Check if device is mobile
+    // Configuration constants
+    const SHOW_DELAY = 400; // 400ms wait before showing
+    const HIDE_DELAY = 300; // 300ms wait before hiding
+    const API_ENDPOINT = 'https://en.wikipedia.org/api/rest_v1/page/summary/'; // Wikipedia REST API endpoint for fetching article summaries
+    const PREVIEW_WIDTH = 320; // Fixed width of pop-up in px
+    const PADDING = 10; // Space in px between link and pop-up, and from container edges
+
+    // Check if device is mobile (if any of the three conditions are true)
     function isMobileDevice() {
-        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
-               || ('ontouchstart' in window) 
-               || (window.matchMedia && window.matchMedia('(max-width: 768px)').matches);
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) // Regex test on user agent string
+               || ('ontouchstart' in window) // Detects touch capability
+               || (window.matchMedia && window.matchMedia('(max-width: 768px)').matches); // Checks if screen is ≤768px wide
     }
 
     // Initialize
     function init() {
-        // Don't initialize on mobile devices
-        if (isMobileDevice()) {
-            return;
-        }
+        if (isMobileDevice()) return;
+
+        // Cache main container once for boundary checks
+        mainContainer = document.querySelector('.main-container');
+        if (!mainContainer) return; // Exit if no container found
         
         createPreviewElement();
         attachEventListeners();
@@ -36,34 +40,21 @@
 
     // Create the preview DOM element
     function createPreviewElement() {
-        previewElement = document.createElement('div');
-        previewElement.className = 'wiki-preview';
-        document.body.appendChild(previewElement);
+        previewElement = document.createElement('div'); // New <div> 
+        previewElement.className = 'wiki-preview'; // with class wiki-preview for CSS styling
+        document.body.appendChild(previewElement); // appends to <body>
 
-        // Keep preview visible when hovering over it
-        previewElement.addEventListener('mouseenter', () => {
-            clearTimeout(hideTimeout);
-        });
-
-        // Hide when mouse leaves the preview window
-        previewElement.addEventListener('mouseleave', () => {
-            hidePreview();
-        });
-
-        // Make entire preview clickable to open Wikipedia page
-        previewElement.addEventListener('click', (e) => {
+        previewElement.addEventListener('mouseenter', () => clearTimeout(hideTimeout)); // Cancel hide timer on mouseenter
+        previewElement.addEventListener('mouseleave', hidePreview); // Hide pop-up on mouseleave
+        previewElement.addEventListener('click', () => {
             const url = previewElement.dataset.wikiUrl;
-            if (url) {
-                window.open(url, '_blank');
-            }
+            if (url) window.open(url, '_blank'); // Opens Wikipedia page in new tab on click
         });
     }
 
     // Attach event listeners to all Wikipedia links
     function attachEventListeners() {
-        const wikiLinks = document.querySelectorAll('a[href*="wikipedia.org/wiki/"]');
-        
-        wikiLinks.forEach(link => {
+        document.querySelectorAll('a[href*="wikipedia.org/wiki/"]').forEach(link => {
             link.addEventListener('mouseenter', handleMouseEnter);
             link.addEventListener('mouseleave', handleMouseLeave);
         });
@@ -71,27 +62,15 @@
 
     // Handle mouse enter
     function handleMouseEnter(event) {
-        const link = event.currentTarget;
-        currentLink = link;
-
-        // Clear any pending hide
+        currentLink = event.currentTarget;
         clearTimeout(hideTimeout);
-
-        // Set delay before showing
-        showTimeout = setTimeout(() => {
-            showPreview(link);
-        }, SHOW_DELAY);
+        showTimeout = setTimeout(() => showPreview(currentLink), SHOW_DELAY);
     }
 
     // Handle mouse leave
     function handleMouseLeave() {
-        // Clear show timeout
         clearTimeout(showTimeout);
-
-        // Set delay before hiding
-        hideTimeout = setTimeout(() => {
-            hidePreview();
-        }, HIDE_DELAY);
+        hideTimeout = setTimeout(hidePreview, HIDE_DELAY);
     }
 
     // Extract article title from Wikipedia URL
@@ -102,92 +81,55 @@
 
     // Fetch article data from Wikipedia API
     async function fetchArticleData(title) {
-        // Check cache first
-        if (cache.has(title)) {
-            return cache.get(title);
-        }
+        if (cache.has(title)) return cache.get(title);
 
-        try {
-            const response = await fetch(API_ENDPOINT + encodeURIComponent(title));
-            
-            if (!response.ok) {
-                throw new Error('Failed to fetch article');
-            }
+        const response = await fetch(API_ENDPOINT + encodeURIComponent(title));
+        if (!response.ok) throw new Error('Failed to fetch article');
+        
+        const data = await response.json();
+        cache.set(title, data);
+        return data;
+    }
 
-            const data = await response.json();
-            
-            // Cache the result
-            cache.set(title, data);
-            
-            return data;
-        } catch (error) {
-            console.error('Error fetching Wikipedia article:', error);
-            throw error;
+    // Reposition preview after content loads
+    function repositionWhenReady(link) {
+        if (currentLink !== link) return;
+
+        const img = previewElement.querySelector('.wiki-preview-thumbnail');
+        
+        const doPosition = () => {
+            if (currentLink === link) positionPreview(link);
+        };
+
+        if (img && !img.complete) {
+            // Wait for image to load
+            img.onload = img.onerror = doPosition;
+        } else {
+            // Use double RAF for layout completion
+            requestAnimationFrame(() => requestAnimationFrame(doPosition));
         }
     }
 
     // Show preview
     async function showPreview(link) {
         const articleTitle = extractArticleTitle(link.href);
-        
-        if (!articleTitle) {
-            return;
-        }
+        if (!articleTitle) return;
 
-        // Show loading state
         previewElement.innerHTML = '<div class="wiki-preview-loading">Loading...</div>';
         positionPreview(link);
         previewElement.classList.add('show');
 
         try {
             const data = await fetchArticleData(articleTitle);
-            
-            // Only update if we're still hovering over the same link
             if (currentLink === link) {
                 renderPreview(data);
-                
-                // Check if there's an image to wait for
-                const img = previewElement.querySelector('.wiki-preview-thumbnail');
-                
-                if (img) {
-                    // Image exists - wait for it to load
-                    if (img.complete) {
-                        // Image already loaded (from cache)
-                        requestAnimationFrame(() => {
-                            requestAnimationFrame(() => {
-                                if (currentLink === link) {
-                                    positionPreview(link);
-                                }
-                            });
-                        });
-                    } else {
-                        // Wait for image to load
-                        img.onload = () => {
-                            if (currentLink === link) {
-                                positionPreview(link);
-                            }
-                        };
-                        img.onerror = () => {
-                            if (currentLink === link) {
-                                positionPreview(link);
-                            }
-                        };
-                    }
-                } else {
-                    // No image - use double RAF for DOM update
-                    requestAnimationFrame(() => {
-                        requestAnimationFrame(() => {
-                            if (currentLink === link) {
-                                positionPreview(link);
-                            }
-                        });
-                    });
-                }
+                repositionWhenReady(link);
             }
         } catch (error) {
             if (currentLink === link) {
                 previewElement.innerHTML = '<div class="wiki-preview-error">Failed to load preview</div>';
             }
+            console.error('Error fetching Wikipedia article:', error);
         }
     }
 
@@ -198,7 +140,6 @@
         const extract = data.extract || 'No description available.';
         const url = data.content_urls?.desktop?.page || '';
 
-        // Store URL in dataset for click handler
         previewElement.dataset.wikiUrl = url;
 
         let html = '<div class="wiki-preview-content">';
@@ -207,63 +148,38 @@
             html += `<img src="${thumbnail}" alt="${title}" class="wiki-preview-thumbnail">`;
         }
 
-        // Check if title appears near the beginning of extract
-        let formattedText;
+        // Format text with title
         const titleIndex = extract.indexOf(title);
-        
-        if (titleIndex !== -1 && titleIndex < 50) {
-            // Title found in first ~50 characters, make it bold in place
-            formattedText = extract.substring(0, titleIndex) + 
-                           `<span class="wiki-preview-title">${title}</span>` + 
-                           extract.substring(titleIndex + title.length);
-        } else {
-            // Title not at beginning, prepend it
-            formattedText = `<span class="wiki-preview-title">${title}.</span> ${extract}`;
-        }
+        const formattedText = (titleIndex !== -1 && titleIndex < 50)
+            ? extract.substring(0, titleIndex) + 
+              `<span class="wiki-preview-title">${title}</span>` + 
+              extract.substring(titleIndex + title.length)
+            : `<span class="wiki-preview-title">${title}.</span> ${extract}`;
 
-        html += `<p class="wiki-preview-extract">${formattedText}</p>`;
-        html += '</div>';
-
+        html += `<p class="wiki-preview-extract">${formattedText}</p></div>`;
         previewElement.innerHTML = html;
     }
 
     // Position preview relative to link
     function positionPreview(link) {
         const linkRect = link.getBoundingClientRect();
-        const previewWidth = 320;
-        const padding = 10;
-
-        // Get main-container boundaries
-        const mainContainer = document.querySelector('.main-container');
         const containerRect = mainContainer.getBoundingClientRect();
-        const rightBoundary = containerRect.right;
-        const bottomBoundary = containerRect.bottom;
 
+        // Calculate horizontal position
         let left = linkRect.left + window.scrollX;
-
-        // Check if preview goes off right edge of main-container - shift it left
-        const previewRight = linkRect.left + previewWidth;
-        if (previewRight > rightBoundary) {
-            left = rightBoundary - previewWidth + window.scrollX;
+        if (linkRect.left + PREVIEW_WIDTH > containerRect.right) {
+            left = containerRect.right - PREVIEW_WIDTH + window.scrollX;
         }
 
-        // Get actual height of current content
+        // Calculate vertical position
         const previewHeight = previewElement.offsetHeight;
-
-        // Start by positioning below the link
-        let top = linkRect.bottom + padding;
+        let top = linkRect.bottom + PADDING;
         
-        // Check if preview would go beyond bottom of main-container (in viewport coordinates)
-        const previewBottom = top + previewHeight;
-        if (previewBottom > bottomBoundary - padding) {
-            // Shift up so preview bottom aligns with container bottom (with padding)
-            top = bottomBoundary - previewHeight - padding;
+        if (top + previewHeight > containerRect.bottom - PADDING) {
+            top = containerRect.bottom - previewHeight - PADDING;
         }
 
-        // Convert to document coordinates
-        top = top + window.scrollY;
-
-        previewElement.style.top = `${top}px`;
+        previewElement.style.top = `${top + window.scrollY}px`;
         previewElement.style.left = `${left}px`;
     }
 

@@ -106,11 +106,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Close mobile menu at window resize >768px
     window.addEventListener('resize', function(e) {
-    if (window.innerWidth > 768) {
-        nav.classList.remove('menu-btn');
-        // nav.style.display = ''; // Reset display property
-    }
-});
+        if (window.innerWidth > 768) {
+            nav.classList.remove('menu-btn');
+        }
+    });
+
+    // Fix for Safari bfcache (back-forward cache) issue
+    // When revisiting page from cache, ensure navbar state is reset
+    window.addEventListener('pageshow', function(e) {
+        if (e.persisted) {
+            // Page was restored from bfcache
+            if (window.innerWidth <= 768) {
+                nav.classList.remove('menu-btn');
+            }
+        }
+    });
 
     /*
     With help from CS50 Duck Debugger

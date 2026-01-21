@@ -3,7 +3,9 @@
 // Ensure the DOM is fully loaded before running the script
 document.addEventListener("DOMContentLoaded", () => {
     
-    /* Script to change the span element in text-container, the images, and the image caption */
+    /*
+    Script to change the span element in text-container, the images, and the image caption
+    */
     const imgContainer = document.querySelector('.img-container');
     const frogText = document.querySelector('.frog-text');
     const oliverText = document.querySelector('.oliver-text');
