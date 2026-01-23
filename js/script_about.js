@@ -47,11 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Mouse hover: show Oliver, revert after 3s
+    // Mouse hover: show Oliver, revert after 5s
     imgContainer.addEventListener('mouseenter', function() {
         showOliver();
         if (revertTimeout) clearTimeout(revertTimeout);
-        revertTimeout = setTimeout(showFrog, 3000);
+        revertTimeout = setTimeout(showFrog, 5000);
     });
 
     // Mouse leave: revert immediately
@@ -60,14 +60,14 @@ document.addEventListener("DOMContentLoaded", () => {
         showFrog();
     });
 
-    // Mobile tap functionality: tap to show Oliver and revert after 3s, or tap again to revert immediately
+    // Mobile tap functionality: tap to show Oliver and revert after 5s, or tap again to revert immediately
     imgContainer.addEventListener('touchstart', function(e) {
         // Prevent default touch behavior, like scrolling
         e.preventDefault();
         if (!showingOliver) {
             showOliver();
             if (revertTimeout) clearTimeout(revertTimeout);
-            revertTimeout = setTimeout(showFrog, 3000);
+            revertTimeout = setTimeout(showFrog, 5000);
         } else {
             // If already showing Oliver, revert immediately
             if (revertTimeout) clearTimeout(revertTimeout);
