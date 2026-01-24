@@ -156,7 +156,9 @@
               extract.substring(titleIndex + title.length)
             : `<span class="wiki-preview-title">${title}.</span> ${extract}`;
 
-        html += `<p class="wiki-preview-extract">${formattedText}</p></div>`;
+        html += `<p class="wiki-preview-extract">${formattedText}</p>`;
+        html += '<div class="wiki-preview-footer"><img src="./images/W_in_blue.svg" alt="Wikipedia logo" class="wiki-icon"></div>';
+        html += '</div>';
         previewElement.innerHTML = html;
     }
 
