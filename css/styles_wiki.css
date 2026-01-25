@@ -1,8 +1,12 @@
 /* CSS file for Wikipedia preview pop-up windows */
 
+:root {
+    --preview-width: 320px;
+}
+
 .wiki-preview {
     position: absolute;
-    width: 250px;
+    width: var(--preview-width);
     background: white;
     border: 1px solid var(--primary-color);
     border-radius: 2px;
